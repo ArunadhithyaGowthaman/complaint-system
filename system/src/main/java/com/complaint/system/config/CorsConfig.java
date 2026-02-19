@@ -19,7 +19,9 @@ public class CorsConfig {
         	    "http://localhost:3000",
         	    "https://lovable.dev",
         	    "https://*.lovable.app",
-        	    "https://*.vercel.app"        // covers all Vercel deployments
+        	    "https://*.vercel.app",
+        	    "https://*.manus.app",      // Add this
+        	    "https://manus.im"          // Add this
         	));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
