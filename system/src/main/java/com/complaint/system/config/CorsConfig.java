@@ -16,8 +16,11 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
-            "http://localhost:3000"   // React dev server
-        ));
+        	    "http://localhost:3000",
+        	    "https://lovable.dev",
+        	    "https://*.lovable.app",
+        	    "https://*.vercel.app"        // covers all Vercel deployments
+        	));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
