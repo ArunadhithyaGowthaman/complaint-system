@@ -36,10 +36,10 @@ public class ComplaintService {
                 .user(user)
                 .build();
 
-        complaintRepository.save(complaint);
-        return "Complaint submitted successfully";
+        Complaint saved = complaintRepository.save(complaint);
+        return "Complaint submitted successfully. ID: " + saved.getId();
     }
-
+    
     public List<ComplaintResponse> getUserComplaints(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));

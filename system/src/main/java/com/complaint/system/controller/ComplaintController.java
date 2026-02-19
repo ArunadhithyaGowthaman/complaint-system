@@ -35,7 +35,7 @@ public class ComplaintController {
 
         String email = principal.getName();
 
-        return ResponseEntity.ok(
+        return ResponseEntity.status(201).body(
                 complaintService.submitComplaint(request, email)
         );
     }
