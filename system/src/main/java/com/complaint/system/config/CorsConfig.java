@@ -11,25 +11,18 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
+	@Bean
+	public CorsFilter corsFilter() {
+	    CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
-        	    "http://localhost:3000",
-        	    "https://lovable.dev",
-        	    "https://*.lovable.app",
-        	    "https://*.vercel.app",
-        	    "https://*.manus.app",      // Add this
-        	    "https://manus.im"          // Add this
-        	));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+	    config.setAllowedOriginPatterns(List.of("*")); // Change this line
+	    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+	    config.setAllowedHeaders(List.of("*"));
+	    config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", config);
 
-        return new CorsFilter(source);
-    }
+	    return new CorsFilter(source);
+	}
 }
