@@ -1,13 +1,13 @@
-package com.compliant.system;
+package com.complaint.system;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SystemApplication {
+public class ComplaintSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SystemApplication.class, args);
+		SpringApplication.run(ComplaintSystemApplication.class, args);
 	}
 
 }
