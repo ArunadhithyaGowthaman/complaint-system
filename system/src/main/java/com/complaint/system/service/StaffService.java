@@ -1,7 +1,7 @@
 package com.complaint.system.service;
 
 import com.complaint.system.dto.ComplaintResponse;
-import java.util.List
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.complaint.system.dto.StatusUpdateRequest;
