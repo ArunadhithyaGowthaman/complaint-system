@@ -43,6 +43,7 @@ public class SecurityConfig {
             	    .requestMatchers(HttpMethod.POST, "/api/complaints").hasRole("USER")
             	    .requestMatchers(HttpMethod.GET,  "/api/complaints/my").hasRole("USER")
             	    .requestMatchers(HttpMethod.PUT,  "/api/complaints/feedback/**").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET, "/api/staff/complaints").hasRole("STAFF")
             	    .anyRequest().authenticated()
             	);
 
