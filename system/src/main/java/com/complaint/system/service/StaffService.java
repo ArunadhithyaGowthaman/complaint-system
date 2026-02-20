@@ -1,5 +1,8 @@
 package com.complaint.system.service;
 
+import com.complaint.system.dto.ComplaintResponse;
+import java.util.List
+
 import org.springframework.stereotype.Service;
 import com.complaint.system.dto.StatusUpdateRequest;
 import com.complaint.system.enums.ComplaintStatus;
@@ -45,4 +48,24 @@ public class StaffService {
         complaintRepository.save(complaint);
         return "Complaint status updated to " + newStatus;
     }
+
+   public List<ComplaintResponse> getAssignedComplaints(String staffEmail) {
+    User staff = userRepository.findByEmail(staffEmail)
+        .orElseThrow(() -> new RuntimeException("Staff not found"));
+    
+    return complaintRepository.findByAssignedStaff(staff)
+        .stream()
+        .map(c -> ComplaintResponse.builder()
+            .id(c.getId())
+            .title(c.getTitle())
+            .description(c.getDescription())
+            .category(c.getCategory())
+            .status(c.getStatus().name())
+            .userName(c.getUser().getName())
+            .assignedStaffName(c.getAssignedStaff().getName())
+            .createdAt(c.getCreatedAt())
+            .build()
+        ).toList();
+   }
+    
 }
