@@ -4,6 +4,9 @@ import java.security.Principal;
 
 import jakarta.validation.Valid;
 
+import com.complaint.system.dto.ComplaintResponse;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +36,11 @@ public class StaffController {
                         staffEmail
                 )
         );
+    }
+    @GetMapping("/complaints")
+    public ResponseEntity<List<ComplaintResponse>> getAssignedComplaints(Principal principal) {
+         return ResponseEntity.ok(
+        staffService.getAssignedComplaints(principal.getName())
+          );
     }
 }
