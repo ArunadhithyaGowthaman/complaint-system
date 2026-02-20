@@ -40,4 +40,20 @@ public class AdminService {
 
         return "Complaint assigned successfully";
     }
+
+    public List<ComplaintResponse> getAllComplaints() {
+    return complaintRepository.findAll()
+        .stream()
+        .map(c -> ComplaintResponse.builder()
+            .id(c.getId())
+            .title(c.getTitle())
+            .description(c.getDescription())
+            .category(c.getCategory())
+            .status(c.getStatus().name())
+            .userName(c.getUser().getName())
+            .assignedStaffName(c.getAssignedStaff() != null ? c.getAssignedStaff().getName() : null)
+            .createdAt(c.getCreatedAt())
+            .build()
+        ).toList();
+   }
 }
