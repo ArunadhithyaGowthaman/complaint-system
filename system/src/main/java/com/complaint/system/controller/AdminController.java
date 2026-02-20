@@ -26,4 +26,9 @@ public class AdminController {
                 adminService.assignComplaint(complaintId, request)
         );
     }
+
+    @GetMapping("/complaints")
+     public ResponseEntity<List<ComplaintResponse>> getAllComplaints() {
+           return ResponseEntity.ok(adminService.getAllComplaints());
+   }
 }
