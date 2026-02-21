@@ -4,7 +4,6 @@ import com.complaint.system.exception.CustomAccessDeniedHandler;
 import com.complaint.system.exception.CustomAuthEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -67,13 +66,3 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
-```
-Commit message: `Add custom auth entry point and access denied handler to SecurityConfig` ✅
-
----
-
-## After All 5 Commits:
-
-Watch Render logs for:
-```
-Started ComplaintSystemApplication
