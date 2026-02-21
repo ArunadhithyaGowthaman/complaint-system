@@ -67,13 +67,3 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
-```
-Commit message: `Add custom auth entry point and access denied handler to SecurityConfig` ✅
-
----
-
-## After All 5 Commits:
-
-Watch Render logs for:
-```
-Started ComplaintSystemApplication
