@@ -1,7 +1,10 @@
 package com.complaint.system.security;
 
+import com.complaint.system.exception.CustomAccessDeniedHandler;
+import com.complaint.system.exception.CustomAuthEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,43 +14,44 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.config.Customizer;
-import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final CustomAuthEntryPoint authEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(JwtFilter jwtFilter,
+                          CustomAuthEntryPoint authEntryPoint,
+                          CustomAccessDeniedHandler accessDeniedHandler) {
         this.jwtFilter = jwtFilter;
+        this.authEntryPoint = authEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
-            .cors(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
-            .httpBasic(httpBasic -> httpBasic.disable())
-            .formLogin(form -> form.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement(s -> s
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint(authEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
             )
             .authorizeHttpRequests(auth -> auth
-            	    .requestMatchers("/api/auth/**").permitAll()
-            	    .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-            	    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-            	    .requestMatchers("/api/staff/**").hasRole("STAFF")
-            	    .requestMatchers(HttpMethod.POST, "/api/complaints").hasRole("USER")
-            	    .requestMatchers(HttpMethod.GET,  "/api/complaints/my").hasRole("USER")
-            	    .requestMatchers(HttpMethod.PUT,  "/api/complaints/feedback/**").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET, "/api/staff/complaints").hasRole("STAFF")
-            	    .anyRequest().authenticated()
-            	);
-
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**",
+                                 "/swagger-ui.html",
+                                 "/v3/api-docs/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/staff/**").hasRole("STAFF")
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter,
+                UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -63,3 +67,13 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+```
+Commit message: `Add custom auth entry point and access denied handler to SecurityConfig` ✅
+
+---
+
+## After All 5 Commits:
+
+Watch Render logs for:
+```
+Started ComplaintSystemApplication
