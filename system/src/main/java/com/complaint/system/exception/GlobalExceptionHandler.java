@@ -1,6 +1,7 @@
 package com.complaint.system.exception;
 
 import org.springframework.http.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,8 +47,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(new ErrorResponse(500, "Something went wrong. Please try again later."));
+public ResponseEntity<ErrorResponse> handleGeneral(Exception ex, HttpServletRequest request) {
+    String path = request.getRequestURI();
+    // Don't intercept springdoc/swagger internal errors
+    if (path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")) {
+        throw new RuntimeException(ex);
     }
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(new ErrorResponse(500, "Something went wrong. Please try again later."));
+}
 }
