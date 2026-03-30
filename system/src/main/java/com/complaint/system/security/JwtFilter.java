@@ -23,14 +23,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-    @Override
-protected boolean shouldNotFilter(HttpServletRequest request) {
-    String path = request.getServletPath();
-    return path.startsWith("/v3/api-docs") ||
-           path.startsWith("/swagger-ui") ||
-           path.startsWith("/swagger-ui.html") ||
-           path.startsWith("/api/auth");
-}
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
