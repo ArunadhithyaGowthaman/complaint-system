@@ -49,7 +49,10 @@ public class SecurityConfig {
                     new AntPathRequestMatcher("/swagger-ui/**"),
                     new AntPathRequestMatcher("/swagger-ui.html"),
                     new AntPathRequestMatcher("/webjars/**"),
-                    new AntPathRequestMatcher("/api/auth/**")
+                    new AntPathRequestMatcher("/api/auth/**"),
+                    new AntPathRequestMatcher("/actuator/health"),
+                    new AntPathRequestMatcher("/actuator/prometheus"),
+                    new AntPathRequestMatcher("/actuator/info")
                 ).permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/staff/**").hasRole("STAFF")
