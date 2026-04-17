@@ -42,18 +42,7 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    new AntPathRequestMatcher("/v3/api-docs"),
-                    new AntPathRequestMatcher("/v3/api-docs/**"),
-                    new AntPathRequestMatcher("/v3/api-docs.yaml"),
-                    new AntPathRequestMatcher("/swagger-ui/**"),
-                    new AntPathRequestMatcher("/swagger-ui.html"),
-                    new AntPathRequestMatcher("/webjars/**"),
-                    new AntPathRequestMatcher("/api/auth/**"),
-                    new AntPathRequestMatcher("/actuator/health"),
-                    new AntPathRequestMatcher("/actuator/prometheus"),
-                    new AntPathRequestMatcher("/actuator/info")
-                ).permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/staff/**").hasRole("STAFF")
                 .anyRequest().authenticated()
