@@ -17,4 +17,12 @@ public enum ComplaintStatus {
    public boolean canTransitionto(ComplaintStatus next){
         return valid.contains(next);
     }
+
+    public static void validate(ComplaintStatus current, ComplaintStatus next) {
+        if (!current.canTransitionTo(next)) {
+            throw new IllegalStateException(
+                "Invalid transition: " + current + " → " + next
+            );
+        }
+    }
 }
