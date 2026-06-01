@@ -19,7 +19,7 @@ public enum ComplaintStatus {
     }
 
     public static void validate(ComplaintStatus current, ComplaintStatus next) {
-        if (!current.canTransitionTo(next)) {
+        if (!current.canTransitionto(next)) {
             throw new IllegalStateException(
                 "Invalid transition: " + current + " → " + next
             );
